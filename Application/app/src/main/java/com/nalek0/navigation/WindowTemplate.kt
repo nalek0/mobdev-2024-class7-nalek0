@@ -17,11 +17,11 @@ import androidx.navigation.compose.rememberNavController
 import com.nalek0.navigation.ui.theme.NavigationTheme
 
 @Composable
-fun WindowTemplate(content: @Composable () -> Unit) {
+fun WindowTemplate(navigateUp: () -> Unit, content: @Composable () -> Unit) {
     NavigationTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { TopBar() },
+            topBar = { TopBar(navigateUp) },
         ) { innerPadding ->
             Box(modifier = Modifier.padding(innerPadding)) {
                 content()
@@ -31,9 +31,7 @@ fun WindowTemplate(content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun TopBar() {
-    val navController = rememberNavController()
-
+private fun TopBar(navigateUp: () -> Unit) {
     NavigationTheme {
         Row(
             modifier = Modifier
@@ -45,7 +43,7 @@ private fun TopBar() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                onClick = navController::navigateUp,
+                onClick = navigateUp,
                 modifier = Modifier.wrapContentSize(),
                 shape = RoundedCornerShape(5.dp),
             ) {
